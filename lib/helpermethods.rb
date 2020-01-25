@@ -38,22 +38,22 @@ def start_game
     player = "Player 1"
     computer = "Computer"
 
-    player1_hand = Hand.new(player)
-    player2_hand = Hand.new(computer)
-    crib = Hand.new("Crib")
-    binding.pry
+    player1_hand = Hand.new(player,"hand")
+    player2_hand = Hand.new(computer,"hand")
+    crib = Hand.new("Crib","crib")
+    # binding.pry
     deck.deal(player1_hand,player2_hand)
     
     [player1_hand, player2_hand, crib, deck]
 end
 
-def round(crib_player,off_player)
-    # computer selects cards to put in crib
-
-    # player selects cards to put in crib
+def round(crib_hand,off_hand,crib)
+    #round starts off with crib already filled
+    crib.player = crib_hand.player
 
     # draw card
-
+    drawn_card = deck.draw
+    
     # pegging
 
     # non crib player counts
@@ -72,5 +72,35 @@ def choose_crib_cards_computer(hand) # add difficulty, whose crib it is
 end
 
 def choose_crib_cards_human(hand)
+    prompt = TTY::Prompt.new
 
+    2.times do
+        crib_card = prompt.select do |menu|
+            hand.cards.each do |card|
+                menu.choice card.pic, card
+            end
+        end
+        crib_card.location = "Crib"
+        crib_card.save
+    end
+end
+
+
+
+def pegging(hand1,hand2)
+
+end
+
+
+def arr_count(arr)
+    #takes in arr, returns hash with vals and counts
+    counts = {}
+    arr.each do |a|
+        if counts[a]
+            counts[a] += 1
+        else
+            counts[a] = 1
+        end
+    end
+    counts
 end

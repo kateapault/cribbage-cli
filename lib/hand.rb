@@ -1,8 +1,9 @@
 class Hand
-    attr_accessor :player
+    attr_accessor :player, :category
 
-    def initialize(player)
+    def initialize(player,category)
         @player = player
+        @category = category
     end
 
     def cards
@@ -10,6 +11,6 @@ class Hand
     end
 
     def show_hand
-        self.cards.each { |c| puts c.pic }
+        self.cards.each { |c| print c.pic }
     end
 end
